@@ -5,6 +5,8 @@
 error_reporting(E_ALL); // Report all types of errors
 ini_set('display_errors', 1); // Display errors on the screen
 
+include 'db_connect.php';
+
 
 # DATABASE
 
@@ -33,23 +35,6 @@ ini_set('display_errors', 1); // Display errors on the screen
 // print_r($articles);
 
 
-# connecting to the database
-
-$db_host = 'localhost';
-$db_name = 'cms';
-$db_user = 'emmy';
-$db_password = 'test1234';
-
-
-$conn = mysqli_connect($db_host, $db_user, $db_password, $db_name);
-
-if(mysqli_connect_error()){
-    echo mysqli_connect_error();
-    exit;
-}
-
-echo 'connected successfully!';
-
 $sql = "SELECT * FROM article ORDER BY published_at";
 
 $result = mysqli_query($conn, $sql);
@@ -65,6 +50,9 @@ if (!$result) {
 
 $articles = mysqli_fetch_all($result, MYSQLI_ASSOC); // FETCH RESULT AS ASSOCIATE ARRAY
 
+
+# Close the database connection after fetching the data
+mysqli_close($conn);
 
 ?>
 
