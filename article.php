@@ -7,8 +7,8 @@ ini_set('display_errors', 1);
 
 include 'db_connect.php';
 
-
-$sql = "SELECT * FROM article WHERE id = 10";
+// USING QUERY STRING IN STEADING OF HARDCODING THE ID IN THE SQL QUERY
+$sql = "SELECT * FROM article WHERE id = {$_GET['id']}";
 
 $result = mysqli_query($conn, $sql);
 
