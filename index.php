@@ -5,7 +5,7 @@
 error_reporting(E_ALL); // Report all types of errors
 ini_set('display_errors', 1); // Display errors on the screen
 
-include 'db_connect.php';
+include 'includes/db_connect.php';
 
 
 # DATABASE
@@ -57,33 +57,22 @@ mysqli_close($conn);
 ?>
 
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>My Blog</title>
-        <meta charest="utf-8">
-    </head>
-    <body>
-        <header?>
-            <h1>My Blog</h1>
-        </header>
-    </body>
+<?php require 'includes/header.php' ?>
 
-    <main>
-        <?php if(empty($articles)) : ?>
-            <p>No paragraph found.</p>
-        <?php else: ?>
-            <ul>
-                <?php foreach($articles as $article) : ?>
-                    <li>
-                        <article>
-                            <h2><a href="article.php?id=<?= $article['id']; ?>"><?= $article['title']; ?></a></h2>
-                            <p><?= $article['content']; ?></p>
+    <?php if(empty($articles)) : ?>
+    <p>No article found.</p>
+    <?php else: ?>
+        <ul>
+            <?php foreach($articles as $article) : ?>
+                <li>
+                    <article>
+                        <h2><a href="article.php?id=<?= $article['id']; ?>"><?= $article['title']; ?></a></h2>
+                        <p><?= $article['content']; ?></p>
 
-                        </article>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
-    </main>
-</html>
+                    </article>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+
+<?php require 'includes/footer.php' ?>

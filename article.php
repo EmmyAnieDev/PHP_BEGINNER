@@ -5,10 +5,10 @@
 error_reporting(E_ALL); 
 ini_set('display_errors', 1); 
 
-include 'db_connect.php';
+include 'includes/db_connect.php';
 
 
-// Check if 'id' is present in the query string and is a numeric value to prevent SQL injection
+// Check if 'id' is present in the query string and is a numeric value to prevent SQL injection by validating ID
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     // USING QUERY STRING INSTEAD OF HARDCODING THE ID IN THE SQL QUERY
     $sql = "SELECT * FROM article WHERE id = {$_GET['id']}";
@@ -37,31 +37,20 @@ mysqli_close($conn);
 ?>
 
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>My Blog</title>
-        <meta charest="utf-8">
-    </head>
-    <body>
-        <header?>
-            <h1>My Blog</h1>
-        </header>
-    </body>
+<?php require 'includes/header.php' ?>
 
-    <main>
-        <?php if(empty($article)) : ?>
-            <p>No article found.</p>
-        <?php else: ?>
-            <ul>
-                <li>
-                    <article>
-                        <h2><?= $article['title']; ?></h2>
-                        <p><?= $article['content']; ?></p>
+    <?php if(empty($article)) : ?>
+        <p>No article found.</p>
+    <?php else: ?>
+        <ul>
+            <li>
+                <article>
+                    <h2><?= $article['title']; ?></h2>
+                    <p><?= $article['content']; ?></p>
 
-                    </article>
-                </li>
-            </ul>
-        <?php endif; ?>
-    </main>
-</html>
+                </article>
+            </li>
+        </ul>
+    <?php endif; ?>
+
+<?php require 'includes/footer.php' ?>
