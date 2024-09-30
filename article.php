@@ -7,21 +7,28 @@ ini_set('display_errors', 1);
 
 include 'db_connect.php';
 
-// USING QUERY STRING IN STEADING OF HARDCODING THE ID IN THE SQL QUERY
-$sql = "SELECT * FROM article WHERE id = {$_GET['id']}";
 
-$result = mysqli_query($conn, $sql);
+// Check if 'id' is present in the query string and is a numeric value to prevent SQL injection
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    // USING QUERY STRING INSTEAD OF HARDCODING THE ID IN THE SQL QUERY
+    $sql = "SELECT * FROM article WHERE id = {$_GET['id']}";
 
-if (!$result) {
-    // Query failed
-    echo "Query failed: " . mysqli_error($conn);
-} elseif (mysqli_num_rows($result) == 0) {
-    // Query successful but no rows found
-    echo "Nothing to fetch as table is empty!";
+    $result = mysqli_query($conn, $sql);
+
+    if (!$result) {
+        // Query failed
+        echo "Query failed: " . mysqli_error($conn);
+    } elseif (mysqli_num_rows($result) == 0) {
+        // Query successful but no rows found
+        echo "Nothing to fetch as table is empty!";
+    }
+
+    $article = mysqli_fetch_assoc($result);   // FETCH RESULT AS ASSOCIATE ARRAY
+} else {
+    $article = null;
 }
 
 
-$article = mysqli_fetch_assoc($result);   // FETCH RESULT AS ASSOCIATE ARRAY
 
 
 # Close the database connection after fetching the data
