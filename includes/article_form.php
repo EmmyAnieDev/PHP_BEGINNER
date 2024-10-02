@@ -10,7 +10,7 @@
 <?php endif; ?>
 
 <!-- Article Form -->
-<form action="new_article.php" method="post">
+<form action="" method="post">
     <div>
         <label for="title">Title</label>
         <input name="title" id="title" placeholder="Article title" value="<?= htmlspecialchars($title); ?>">
@@ -25,6 +25,8 @@
         <label for="published_at">Publication date and time</label>
         <input name="published_at" id="published_at" type="datetime-local" value="<?= htmlspecialchars($published_at); ?>">
     </div>
+
+
 
     <button type="submit">Save</button>
 </form>

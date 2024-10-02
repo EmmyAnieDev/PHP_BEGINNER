@@ -4,8 +4,8 @@
     ini_set('display_errors', 1); 
 
     include 'includes/db_connect.php';
+    include 'includes/validate_article.php';
 
-    $errors = [];
     $title = $content = $published_at = '';
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -15,16 +15,7 @@
         $content = $_POST['content'];
         $published_at = $_POST['published_at'];
 
-        // Validation checks
-        if ($title == '') {
-            $errors[] = 'Title is required';
-        }
-        if ($content == '') {
-            $errors[] = 'Content is required';
-        }
-        if ($published_at == '') {
-            $errors[] = 'Publication date is required';
-        }
+        $errors = validateArticle($title, $content, $published_at);
 
         if (empty($errors)) {
 
