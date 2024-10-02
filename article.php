@@ -10,6 +10,10 @@ include 'includes/db_connect.php';
 
 // Check if 'id' is present in the query string and is a numeric value to prevent SQL injection by validating ID
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+
+    $conn = getDB();
+
+    
     // USING QUERY STRING INSTEAD OF HARDCODING THE ID IN THE SQL QUERY
     $sql = "SELECT * FROM article WHERE id = {$_GET['id']}";
 

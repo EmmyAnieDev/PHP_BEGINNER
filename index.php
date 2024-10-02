@@ -34,6 +34,8 @@ include 'includes/db_connect.php';
 
 // print_r($articles);
 
+$conn = getDB();
+
 
 $sql = "SELECT * FROM article ORDER BY published_at";
 
