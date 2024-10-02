@@ -5,110 +5,87 @@
 
     include 'includes/db_connect.php';
 
-
     $errors = [];
     $title = $content = $published_at = '';
 
-    if($_SERVER['REQUEST_METHOD'] == "POST"){
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-
+        // Get user input
         $title = $_POST['title'];
         $content = $_POST['content'];
         $published_at = $_POST['published_at'];
 
-
-        if($title == ''){
+        // Validation checks
+        if ($title == '') {
             $errors[] = 'Title is required';
         }
-        if($content == ''){
+        if ($content == '') {
             $errors[] = 'Content is required';
         }
-        if($published_at == ''){
-            $errors[] = 'published_at is required';
+        if ($published_at == '') {
+            $errors[] = 'Publication date is required';
         }
 
+        if (empty($errors)) {
 
-        if(empty($errors)){
-
+            // Establish DB connection
             $conn = getDB();
-            
-    
-            # SAFE WAY: Using prepared statements
+
+            // Prepare the SQL statement
             $sql = "INSERT INTO article (title, content, published_at) VALUES (?, ?, ?)";
-    
-    
             $stmt = mysqli_prepare($conn, $sql);
-    
-    
+
             if (!$stmt) {
-                
-                // Query successful
+                // Query failed
                 echo "Query failed: " . mysqli_error($conn);
-    
-            } else{
-                
+            } else {
+                // Bind and execute the statement
                 mysqli_stmt_bind_param($stmt, "sss", $title, $content, $published_at);
-    
-                if(mysqli_stmt_execute($stmt)){
-    
-                    // Query successful
-                    echo "Successfully added";
-    
-                }else{
-    
+
+                if (mysqli_stmt_execute($stmt)) {
+                    // Query successful, redirect to index.php
+                    header('Location: index.php');
+                    exit();
+                } else {
+                    // Error in executing the statement
                     echo mysqli_stmt_error($stmt);
-    
                 }
-    
             }
-
         }
-
     }
-
 ?>
 
+<?php require 'includes/header.php'; ?>
 
+<h2>New Article</h2>
 
-<?php require 'includes/header.php' ?>
+<!-- Display errors if any -->
+<?php if (!empty($errors)) : ?>
+    <ul>
+        <?php foreach($errors as $error) : ?>
+            <li><?= htmlspecialchars($error); ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
 
+<!-- Article Form -->
+<form action="new_article.php" method="post">
+    <div>
+        <label for="title">Title</label>
+        <input name="title" id="title" placeholder="Article title" value="<?= htmlspecialchars($title); ?>">
+    </div>
 
-    <h2>New Article</h2>
+    <div>
+        <label for="content">Content</label>
+        <textarea name="content" id="content" rows="4" cols="40" placeholder="Article content"><?= htmlspecialchars($content); ?></textarea>
+    </div>
 
-    <?php if (!empty($errors)) : ?>
-        <ul>
-            <?php foreach($errors as $error) : ?>
-                <li><?= $error ?></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
+    <div>
+        <label for="published_at">Publication date and time</label>
+        <input name="published_at" id="published_at" type="datetime-local" value="<?= htmlspecialchars($published_at); ?>">
+    </div>
 
+    <button type="submit">Add</button>
+</form>
 
-    <form action="new_article.php", method="post">
-
-        <div>
-
-            <label for="title">Title</label>
-            <input name="title" id="title" placeholder="Article title" value="<?= htmlspecialchars($title); ?>">
-
-        </div>
-
-        <div>
-
-            <label for="content">Content</label>
-            <textarea name="content" id="content" rows="4" cols="40" placeholder="Article content"><?= htmlspecialchars($content); ?></textarea>
-
-        </div>
-
-        <div>
-
-            <label for="published_at">Publication date and time</label>
-            <input name="published_at" id="published_at" type="datetime-local" value="<?= $published_at; ?>">
-
-        </div>
-
-        <button>Add</button>
-
-    </form>
-
-<?php require 'includes/footer.php' ?>
+<?php require 'includes/footer.php'; ?>
