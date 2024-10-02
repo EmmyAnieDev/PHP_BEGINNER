@@ -7,33 +7,6 @@ ini_set('display_errors', 1); // Display errors on the screen
 
 include 'includes/db_connect.php';
 
-
-# DATABASE
-
-
-# Sample articles data stored in the system (as in a database table)
-// $articles = [
-//     [
-//         'title' => 'First post',
-//         'content' => 'This is the first of many posts'
-//     ],
-//     [
-//         'title' => 'Another post',
-//         'content' => 'Yet another fascinating posts...'
-//     ],
-//     [
-//         'title' => 'Read this!',
-//         'content' => 'You must read this now, it\'s essential reading!'
-//     ],
-//     [
-//         'title' => 'The latest news',
-//         'content' => 'Here is the latest new, read it now!'
-//     ]
-// ];
-
-
-// print_r($articles);
-
 $conn = getDB();
 
 
