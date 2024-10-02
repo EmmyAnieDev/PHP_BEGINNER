@@ -6,53 +6,25 @@
     include 'includes/db_connect.php';
 
 
+    $errors = [];
+    $title = $content = $published_at = '';
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
 
-        // # UNSAFE WAY: Vulnerable to SQL Injection
-        // $sql = "INSERT INTO article (title, content, published_at) 
-        // VALUES ('{$_POST['title']}', '{$_POST['content']}', '{$_POST['published_at']}')";
+
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $published_at = $_POST['published_at'];
 
 
-        // $result = mysqli_query($conn, $sql);
-
-
-        // if (!$result) {
-        //     // Query failed
-        //     echo "Query failed: " . mysqli_error($conn);
-        // } else{
-        //     // Query successful
-        //     echo "Successfully added";
-        // }
-
-
-
-
-        // # SAFE WAY: Using mysqli escape string function
-        // $sql = "INSERT INTO article (title, content, published_at) VALUES 
-        // ('" . mysqli_escape_string($conn, $_POST['title']) . "',
-        // '" . mysqli_escape_string($conn, $_POST['content']) . "',
-        // '" . mysqli_escape_string($conn, $_POST['published_at']) . "')";
-
-
-        // $result = mysqli_query($conn, $sql);
-
-
-        // if (!$result) {
-        //     // Query failed
-        //     echo "Query failed: " . mysqli_error($conn);
-        // } else{
-        //     // Query successful
-        //     echo "Successfully added";
-        // }
-
-        $errors = [];
-
-        if($_POST['title'] == ''){
+        if($title == ''){
             $errors[] = 'Title is required';
         }
-        if($_POST['content'] == ''){
+        if($content == ''){
             $errors[] = 'Content is required';
+        }
+        if($published_at == ''){
+            $errors[] = 'published_at is required';
         }
 
 
@@ -75,7 +47,7 @@
     
             } else{
                 
-                mysqli_stmt_bind_param($stmt, "sss", $_POST['title'], $_POST['content'], $_POST['published_at']);
+                mysqli_stmt_bind_param($stmt, "sss", $title, $content, $published_at);
     
                 if(mysqli_stmt_execute($stmt)){
     
@@ -117,21 +89,21 @@
         <div>
 
             <label for="title">Title</label>
-            <input name="title" id="title" placeholder="Article title">
+            <input name="title" id="title" placeholder="Article title" value="<?= htmlspecialchars($title); ?>">
 
         </div>
 
         <div>
 
             <label for="content">Content</label>
-            <textarea name="content" id="content" row="4" cols="40" placeholder="Article content"></textarea>
+            <textarea name="content" id="content" rows="4" cols="40" placeholder="Article content"><?= htmlspecialchars($content); ?></textarea>
 
         </div>
 
         <div>
 
             <label for="published_at">Publication date and time</label>
-            <input name="published_at" id="published_at" type="datetime-local">
+            <input name="published_at" id="published_at" type="datetime-local" value="<?= $published_at; ?>">
 
         </div>
 
