@@ -42,6 +42,7 @@ mysqli_close($conn);
                 </article>
                  
                 <a href="edit_article.php?id=<?= $article['id']; ?>">Edit</a>
+                <a href="delete_article.php?id=<?= $article['id']; ?>">Delete</a>
 
             </li>
         </ul>
