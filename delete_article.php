@@ -13,13 +13,12 @@ $conn = getDB();
 if (isset($_GET['id'])) {
 
     // Fetch the article data based on the ID
-    $article = getArticle($conn, $_GET['id']);
+    $article = getArticle($conn, $_GET['id'], 'id');  // In this case, instead of fetching all columns (using '*'), we are only fetching 'id'
 
     if ($article) {
+
         $id = $article['id']; // This is crucial to target the correct article
-        $title = $article['title'];
-        $content = $article['content'];
-        $published_at = $article['published_at'];
+     
     } else {
         die("Article not found");
     }

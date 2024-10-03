@@ -1,8 +1,25 @@
 <?php
 
-function getArticle($conn, $id){
+/**
+ * Fetches an article from the database by its ID.
+ * 
+ * @param mysqli $conn The database connection object.
+ * @param int $id The ID of the article to fetch.
+ * @param string $columns (Optional) Specifies which columns to retrieve. 
+ *                        Default is '*' to retrieve all columns.
+ * 
+ * By default, the $columns parameter is set to '*' to fetch all columns 
+ * from the 'article' table. However, if specific columns are needed, 
+ * a string of column names can be passed (e.g., 'title, content').
+ * This provides flexibility in selecting which data to retrieve, 
+ * making the function more reusable.
+ * 
+ * @return array|null The article data as an associative array, or null if not found.
+ */
 
-    $sql = "SELECT * FROM article WHERE id = ? ";
+function getArticle($conn, $id, $columns = '*'){
+
+    $sql = "SELECT $columns FROM article WHERE id = ? ";
 
     // mysqli_prepare prepares the SQL query for execution
     $stmt = mysqli_prepare($conn, $sql); 
