@@ -5,6 +5,7 @@ class Item {
     public $name;    ///  public properties can be used or accesed outside the class unlike private
     public $description = 'This is the default';  // default value to the properties
     private $year;    // since it private it can only be used inside this class
+    public static $count =0;  // Static properties and methods can be accessed without instantiating the class.
 
 
     // When an object is created, initialize the object's properties
@@ -12,6 +13,7 @@ class Item {
         $this->name = $name;
         $this->description = $description;
         $this->year = $year;
+        static::$count++;  // count wouldn't be added to the constructor as it's set as static
     }
 
     // same as properties, public method can be accessible outisde the class.
@@ -32,5 +34,10 @@ class Item {
     // now we would be modify the private property for year using this public method
     public function setYear($newYear){
         return $this->year = $newYear;
+    }
+
+    // creating a static method
+    public static function showCount(){
+        return static::$count;
     }
 }

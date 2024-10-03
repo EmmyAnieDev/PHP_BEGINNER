@@ -5,8 +5,14 @@ ini_set('display_errors', 1);
 
 require 'item.php';
 
+// we don't need to instansiate the class since count is a staic property
+var_dump(Item::$count);
+
 // creating an object from the class
 $my_item = new Item('Huge', 'it\'s a big item', 2016);
+
+var_dump(Item::$count);  // value is incremented by 1 whenever we create an object
+
 $my_item2 = new Item('Small', 'it\'s a small item', 2003);
 
 
@@ -22,3 +28,7 @@ echo '<br/>';
 
 echo $my_item2->name . '<br/>';
 echo $my_item2->sayHello() . '<br/>';
+
+echo '<br/>';
+
+echo "this is the total count of object created: " . Item::$count;
