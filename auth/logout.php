@@ -1,5 +1,24 @@
 <?php
 
-session_start();
+session_start(); // Start the session
 
-$_SESSION['is_logged_in'] = false;
+// Clear all session variables
+$_SESSION = array();
+
+// If session cookies are used, delete the session cookie
+if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
+}
+
+// Destroy the session
+session_destroy();
+
+// Redirect to the index page
+header("Location: ../index.php");
+exit();
+
+?>
