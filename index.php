@@ -9,6 +9,8 @@ ini_set('display_errors', 1); // Display errors on the screen
 
 include 'includes/db_connect.php';
 
+session_start();   // Add to the top of the file
+
 $conn = getDB();
 
 
@@ -35,6 +37,16 @@ mysqli_close($conn);
 
 
 <?php require 'includes/header.php' ?>
+
+    <?php if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in']) : ?>
+        
+        <p>You are currently logged in<a href="auth/logout.php">   Logout</a></p>
+
+    <?php else: ?>   
+        
+        <p>You are currently logged out<a href="auth/login.php">   Login</a></p>
+
+    <?php endif; ?>  
 
     <a href="new_article.php">New Article</a>
 
