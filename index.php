@@ -37,18 +37,19 @@ mysqli_close($conn);
 
 
 <?php require 'includes/header.php' ?>
+<?php require 'auth/auth.php' ?>
 
-    <?php if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in']) : ?>
+    <?php if (isLoggedIn()) : ?>
         
         <p>You are currently logged in<a href="auth/logout.php">   Logout</a></p>
+
+        <a href="new_article.php">New Article</a>
 
     <?php else: ?>   
         
         <p>You are currently logged out<a href="auth/login.php">   Login</a></p>
 
     <?php endif; ?>  
-
-    <a href="new_article.php">New Article</a>
 
     <?php if(empty($articles)) : ?>
     <p>No article found.</p>

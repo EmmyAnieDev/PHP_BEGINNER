@@ -7,6 +7,14 @@
 
     include 'includes/db_connect.php';
     include 'includes/validate_article.php';
+    include 'auth/auth.php';
+
+    session_start();
+
+    // If not logged in
+    if (!isLoggedIn()) {
+        die("Unauthorized"); 
+    }
 
     $title = $content = $published_at = '';
 

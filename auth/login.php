@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     if ($_POST['username'] == "dave" && $_POST['password'] == "1234"){
 
-        session_regenerate_id(true); // regenerate id when user logs in
+        session_regenerate_id(true); // regenerate id when user logs in as it prevents session-related attacks.
 
         $_SESSION['is_logged_in'] = true;
 
