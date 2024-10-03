@@ -23,4 +23,14 @@ class Item {
     private function yearDifferences() {
         return 2024 - $this->year;
     }
+
+    // now we would be able to access the private property for year using this public method
+    public function getYear(){
+        return $this->year;
+    }
+
+    // now we would be modify the private property for year using this public method
+    public function setYear($newYear){
+        return $this->year = $newYear;
+    }
 }
