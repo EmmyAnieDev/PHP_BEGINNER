@@ -1,5 +1,6 @@
 <?php
 
+  #THIS FILE IS RESPONSIBLE FOR GETTING ARTICLE USING IT'S ID
 
 
 error_reporting(E_ALL); 

@@ -1,5 +1,7 @@
 <?php
 
+    # THIS FILE IS RESPONSIBLE FOR ADDINNG NEW ARTICLE INTO THE DATABASE
+
     error_reporting(E_ALL); 
     ini_set('display_errors', 1); 
 

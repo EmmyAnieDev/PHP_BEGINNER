@@ -1,5 +1,7 @@
 <?php
 
+# THIS FILE IS RESPONSIBLE FOR EDITING OR UPDATING ARTICLE IN DATABASE USING IT'S ID
+
 error_reporting(E_ALL); 
 ini_set('display_errors', 1); 
 

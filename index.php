@@ -1,5 +1,7 @@
 <?php
 
+# THIS FILE IS RESPONSIBLE FOR FETCHING OR DISPLAYING ALL ARTICLES FROM DATABASE
+
 
 # Enable PHP error reporting for debugging
 error_reporting(E_ALL); // Report all types of errors

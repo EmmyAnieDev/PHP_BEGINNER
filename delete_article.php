@@ -1,5 +1,8 @@
 <?php
 
+
+# THIS FILE IS RESPONSIBLE FOR DELETING ARTICLE IN THE DATABASE USING IT'S ID
+
 error_reporting(E_ALL); 
 ini_set('display_errors', 1); 
 
