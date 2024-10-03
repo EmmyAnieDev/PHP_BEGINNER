@@ -28,48 +28,48 @@ if (isset($_GET['id'])) {
     die("ID not supplied, article not given");
 }
 
-$sql = "DELETE FROM article WHERE id = ? ";
-$stmt = mysqli_prepare($conn, $sql);
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-if (!$stmt) {
+    $sql = "DELETE FROM article WHERE id = ? ";
+    $stmt = mysqli_prepare($conn, $sql);
 
-    echo "Query failed: " . mysqli_error($conn);
+    if (!$stmt) {
 
-} else {
-
-    mysqli_stmt_bind_param($stmt, "i", $id);
-
-    if (mysqli_stmt_execute($stmt)) {
-
-        // delete successful, redirect to the index page or display a success message
-        header("Location: index.php");
-        exit(); 
+        echo "Query failed: " . mysqli_error($conn);
 
     } else {
-        // Error in executing the update statement
-        echo "Error in executing delete: " . mysqli_stmt_error($stmt);
+
+        mysqli_stmt_bind_param($stmt, "i", $id);
+
+        if (mysqli_stmt_execute($stmt)) {
+
+            // delete successful, redirect to the index page or display a success message
+            header("Location: index.php");
+            exit(); 
+
+        } else {
+            // Error in executing the update statement
+            echo "Error in executing delete: " . mysqli_stmt_error($stmt);
+        }
     }
+
 }
-
-// if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-//     // // Get input from form submission
-//     // $title = $_POST['title'];
-//     // $content = $_POST['content'];
-//     // $published_at = $_POST['published_at'];
-
-//     // // Validate the article data
-//     // $errors = validateArticle($title, $content, $published_at);
-
-//     // if (empty($errors)) {
-
-//         // Prepare the SQL statement to update the article
-
-    
-// }
 
 // Close the database connection
 mysqli_close($conn);
 
 ?>
+
+
+<?php require 'includes/header.php' ?>
+
+    <h2>Delete Article</h2>
+
+    <form method = "POST">
+        <p>Are you sure you want to delete this article?</p>
+        <button>Delete</button>
+        <a href="article.php?id=<?= $article['id']; ?>">Cancel</a>
+    </form>
+
+<?php require 'includes/footer.php' ?>
 
