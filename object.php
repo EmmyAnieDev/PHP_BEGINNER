@@ -32,3 +32,7 @@ echo $my_item2->sayHello() . '<br/>';
 echo '<br/>';
 
 echo "this is the total count of object created: " . Item::$count;
+
+echo '<br/>';
+
+echo "the class maximum length is: " . Item::MAX_LENGTH;

@@ -2,6 +2,10 @@
 
 class Item {
 
+    // to use constant inside the class we use the "const" keyword
+
+    public const MAX_LENGTH = 24;   // const are just like static, can be accessed without instantiating the class. 
+
     public $name;    ///  public properties can be used or accesed outside the class unlike private
     public $description = 'This is the default';  // default value to the properties
     private $year;    // since it private it can only be used inside this class
