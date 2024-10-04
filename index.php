@@ -19,11 +19,6 @@ $sql = "SELECT * FROM article ORDER BY published_at";
 
 $result = $conn->query($sql);  // query the connection with the (sql)
 
-if ($result == false) {
-    // Query failed
-    echo "Query failed: " . $conn->errorInfo();
-} 
-
 $articles = $result->fetchAll(PDO::FETCH_ASSOC); // FETCH RESULT AS ASSOCIATE ARRAY
 
 

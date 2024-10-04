@@ -6,31 +6,30 @@
 error_reporting(E_ALL); 
 ini_set('display_errors', 1); 
 
-include 'includes/db_connect.php';
+require 'classes/database.php';
 require 'includes/get_article.php'; 
 
-$conn = getDB();
+$db = new Database(); 
+$conn = $db->getConn(); 
 
 // Check if 'id' is present in the query string
 if (isset($_GET['id'])) {
 
-
     $article = getArticle($conn, $_GET['id']);
 
 } else {
+
     $article = null;
+
 }
 
-
-# Close the database connection after fetching the data
-mysqli_close($conn);
 
 ?>
 
 
 <?php require 'includes/header.php' ?>
 
-    <?php if(empty($article)) : ?>
+    <?php if(!$article) : ?>
         <p>No article found.</p>
     <?php else: ?>
         <ul>

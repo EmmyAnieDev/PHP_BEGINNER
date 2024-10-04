@@ -26,13 +26,15 @@ class Database {
             // Create a new PDO instance and establish the connection
             $conn = new PDO($dsn, $db_user, $db_password);
 
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Set the PDO error mode to exception
+
             // Return the PDO connection object
             return $conn;
             
         } catch (PDOException $e) {
             // Handle connection error and display the error message
             echo "Connection failed: " . $e->getMessage();
-            return false;
+            exit;
         }
     }
 
