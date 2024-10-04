@@ -4,12 +4,16 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1); 
 
 require '../classes/user.php';
+require '../classes/database.php';
+
+$db = new Database(); 
+$conn = $db->getConn();
 
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-    if (User::authenticate($_POST['username'], $_POST['password'])){
+    if (User::authenticate($conn, $_POST['username'], $_POST['password'])){
 
         session_regenerate_id(true); 
         $_SESSION['is_logged_in'] = true;
