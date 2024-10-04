@@ -5,8 +5,7 @@ ini_set('display_errors', 1);
 
 require '../includes/init.php';
 
-$db = new Database(); 
-$conn = $db->getConn();
+$conn =  require '../includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 

@@ -9,6 +9,8 @@ ini_set('display_errors', 1);
 
 require 'includes/init.php';
 
+$conn =  require 'includes/db.php';
+
 $db = new Database(); 
 $conn = $db->getConn(); 
 

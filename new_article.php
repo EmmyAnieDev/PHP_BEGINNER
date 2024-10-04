@@ -7,8 +7,8 @@
 
     require 'includes/init.php';
 
-    $db = new Database(); 
-    $conn = $db->getConn();
+    $conn =  require 'includes/db.php';
+
 
     // If not logged in
     if (!Auth::isLoggedIn()) {
