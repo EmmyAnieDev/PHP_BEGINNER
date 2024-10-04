@@ -7,7 +7,6 @@ ini_set('display_errors', 1);
 
 require 'classes/database.php';
 require 'classes/article.php';
-require 'includes/validate_article.php'; 
 
 $db = new Database(); 
 $conn = $db->getConn();

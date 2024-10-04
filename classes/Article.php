@@ -27,6 +27,7 @@ class Article {
         return $result->fetchAll(PDO::FETCH_ASSOC); // Fetch the result as an associative array
     }
 
+    
 
 
     /**
@@ -55,6 +56,7 @@ class Article {
     
         return null; // Return null if the execution fails or the article is not found
     }
+
 
 
     public function updateArticle($conn, $id, $title, $content, $published_at) {
@@ -119,5 +121,34 @@ class Article {
     }
     
     
+
+    // function to delete article
+    public function deleteArticle($conn, $id){
+
+        $sql = "DELETE FROM article WHERE id = :id ";
+        $stmt = $conn->prepare($sql);
+    
+        if (!$stmt) {
+    
+            echo "Query failed: " . implode(", ", $conn->errorInfo());
+            return false; // Exit the function to prevent further execution
+    
+        } else {
+    
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    
+            if ($stmt->execute()) {
+    
+                // delete successful, redirect to the index page or display a success message
+                header("Location: index.php");
+                exit(); 
+    
+            } else {
+                // Error in executing the update statement
+                echo "Error in executing delete: " . implode(", ", $stmt->errorInfo());
+            }
+        }
+
+    }
 
 }
