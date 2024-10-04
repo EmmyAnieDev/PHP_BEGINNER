@@ -10,6 +10,7 @@ class Item {
     public $description = 'This is the default';  // default value to the properties
     private $year;    // since it private it can only be used inside this class
     public static $count =0;  // Static properties and methods can be accessed without instantiating the class.
+    public $country = 'USA' ;
 
 
     // When an object is created, initialize the object's properties
@@ -43,5 +44,9 @@ class Item {
     // creating a static method
     public static function showCount(){
         return static::$count;
+    }
+
+    public function getData(){
+        return 'we have four data in each item';
     }
 }

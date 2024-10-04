@@ -44,4 +44,14 @@ echo '<br/>';
 $book_obj1 = new Book('pen game', 'best for all', '2013', 'Damian');
 
 //calling the getYear method, which is inherited from the Item class. 
-echo "the was gotten using the getYear Method from it parent's class. Book year: " . $book_obj1->getYear() . '<br/>';   
+echo "the was gotten using the getYear Method from it parent's class. Book year: " . $book_obj1->getYear() . '<br/>';  
+
+echo '<br/>'; 
+
+echo $my_item2->country . '<br/>'; 
+echo $my_item2->getData() . '<br/>'; 
+
+echo '<br/>'; 
+
+echo $book_obj1->country . '<br/>'; 
+echo $book_obj1->getData() . '<br/>'; 
