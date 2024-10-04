@@ -3,35 +3,30 @@
 # THIS FILE IS RESPONSIBLE FOR FETCHING OR DISPLAYING ALL ARTICLES FROM DATABASE
 
 
-# Enable PHP error reporting for debugging
-error_reporting(E_ALL); // Report all types of errors
-ini_set('display_errors', 1); // Display errors on the screen
+error_reporting(E_ALL); 
+ini_set('display_errors', 1); 
 
-include 'includes/db_connect.php';
+require 'classes/database.php';
 
-session_start();   // Add to the top of the file
+session_start();  
 
-$conn = getDB();
+
+$db = new Database();  // create an object for the Database class
+$conn = $db->getConn(); // assign the getConn method to a variable called conn
 
 
 $sql = "SELECT * FROM article ORDER BY published_at";
 
-$result = mysqli_query($conn, $sql);
+$result = $conn->query($sql);  // query the connection with the (sql)
 
-if (!$result) {
+if ($result == false) {
     // Query failed
-    echo "Query failed: " . mysqli_error($conn);
-} elseif (mysqli_num_rows($result) == 0) {
-    // Query successful but no rows found
-    echo "Nothing to fetch as table is empty!";
-}
+    echo "Query failed: " . $conn->errorInfo();
+} 
+
+$articles = $result->fetchAll(PDO::FETCH_ASSOC); // FETCH RESULT AS ASSOCIATE ARRAY
 
 
-$articles = mysqli_fetch_all($result, MYSQLI_ASSOC); // FETCH RESULT AS ASSOCIATE ARRAY
-
-
-# Close the database connection after fetching the data
-mysqli_close($conn);
 
 ?>
 
