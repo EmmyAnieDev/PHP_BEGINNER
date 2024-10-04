@@ -6,11 +6,8 @@
 error_reporting(E_ALL); 
 ini_set('display_errors', 1); 
 
-require 'classes/database.php';
-require 'classes/article.php';
-require 'classes/Auth.php';
-
-session_start();  
+require 'includes/init.php';
+ 
 
 $db = new Database();  // create an object for the Database class
 $conn = $db->getConn(); // assign the getConn method to a variable called conn

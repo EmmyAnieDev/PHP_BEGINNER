@@ -3,13 +3,10 @@
 error_reporting(E_ALL); 
 ini_set('display_errors', 1); 
 
-require '../classes/user.php';
-require '../classes/database.php';
+require '../includes/init.php';
 
 $db = new Database(); 
 $conn = $db->getConn();
-
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 

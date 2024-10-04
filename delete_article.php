@@ -6,8 +6,7 @@
 error_reporting(E_ALL); 
 ini_set('display_errors', 1); 
 
-require 'classes/database.php';
-require 'classes/article.php';
+require 'includes/init.php';
 
 $db = new Database(); 
 $conn = $db->getConn();
