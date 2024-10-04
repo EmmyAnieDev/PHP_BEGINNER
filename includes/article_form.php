@@ -1,13 +1,14 @@
 <?php require 'header.php'; ?>
 
 <!-- Display errors if any -->
-<?php if (!empty($errors)) : ?>
+<?php if (!empty($article_obj->errors)) : ?>
     <ul>
-        <?php foreach($errors as $error) : ?>
+        <?php foreach($article_obj->errors as $error) : ?>
             <li><?= htmlspecialchars($error); ?></li>
         <?php endforeach; ?>
     </ul>
 <?php endif; ?>
+
 
 <!-- Article Form -->
 <form action="" method="post">

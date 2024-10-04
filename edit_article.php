@@ -41,14 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $content = $_POST['content'];
     $published_at = $_POST['published_at'];
 
-    // Validate the article data
-    $errors = validateArticle($title, $content, $published_at);
+    $article_obj = new Article();
+    $article_obj->updateArticle($conn, $id, $title, $content, $published_at);
 
-    if (!$errors) {
-    
-        $article_obj = new Article();
-        $article_obj->updateArticle($conn, $id, $title, $content, $published_at);
-    }
     
 }
 

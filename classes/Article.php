@@ -11,6 +11,7 @@ class Article {
     public $title;
     public $content;
     public $published_at;
+    public $errors = [];
 
     /**
      * Retrieve all articles from the database.
@@ -57,32 +58,64 @@ class Article {
 
 
     public function updateArticle($conn, $id, $title, $content, $published_at) {
-        // Prepare the SQL statement to update the article
-        $sql = "UPDATE article SET title = :title, content = :content, published_at = :published_at WHERE id = :id";
-        $stmt = $conn->prepare($sql);
+
+        // Assign the form values to the object's properties
+        $this->title = $title;
+        $this->content = $content;
+        $this->published_at = $published_at;
     
-        if (!$stmt) {
-            // If the statement preparation fails, output an error message
-            echo "Query failed: " . implode(", ", $conn->errorInfo());
-            return false; // Exit the function to prevent further execution
-        } 
+        // Validate the article before updating
+        if ($this->validateArticle()) {
     
-        // Bind the parameters to the prepared statement
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->bindValue(':title', $title, PDO::PARAM_STR);
-        $stmt->bindValue(':content', $content, PDO::PARAM_STR);
-        $stmt->bindValue(':published_at', $published_at, PDO::PARAM_STR);
+            // Prepare the SQL statement to update the article
+            $sql = "UPDATE article SET title = :title, content = :content, published_at = :published_at WHERE id = :id";
+            $stmt = $conn->prepare($sql);
     
-        // Execute the prepared statement
-        if ($stmt->execute()) {
-            // Update successful, redirect to the article page or display a success message
-            header("Location: article.php?id=" . $id);
-            exit();
+            if (!$stmt) {
+                // If the statement preparation fails, output an error message
+                echo "Query failed: " . implode(", ", $conn->errorInfo());
+                return false; // Exit the function to prevent further execution
+            } 
+    
+            // Bind the parameters to the prepared statement
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':title', $title, PDO::PARAM_STR);
+            $stmt->bindValue(':content', $content, PDO::PARAM_STR);
+            $stmt->bindValue(':published_at', $published_at, PDO::PARAM_STR);
+    
+            // Execute the prepared statement
+            if ($stmt->execute()) {
+                // Update successful, redirect to the article page or display a success message
+                header("Location: article.php?id=" . $id);
+                exit();
+            } else {
+                // Error in executing the update statement
+                echo "Error in executing update: " . implode(", ", $stmt->errorInfo());
+                return false; // Exit the function to prevent further execution
+            }
         } else {
-            // Error in executing the update statement
-            echo "Error in executing update: " . implode(", ", $stmt->errorInfo());
-            return false; // Exit the function to prevent further execution
+            // Validation failed
+            return false;
         }
+    }
+    
+    
+
+
+    // function to Validate input
+    protected function validateArticle() {
+        if ($this->title == '') {
+            $this->errors[] = 'Title is required';
+        }
+        if ($this->content == '') {
+            $this->errors[] = 'Content is required';
+        }
+        if ($this->published_at == '') {
+            $this->errors[] = 'Publication date is required';
+        }
+    
+        // Return true if no errors were found, false otherwise
+        return empty($this->errors);
     }
     
     
