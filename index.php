@@ -8,6 +8,7 @@ ini_set('display_errors', 1);
 
 require 'classes/database.php';
 require 'classes/article.php';
+require 'classes/Auth.php';
 
 session_start();  
 
@@ -21,9 +22,8 @@ $articles = Article::getAllArticles($conn);
 
 
 <?php require 'includes/header.php' ?>
-<?php require 'auth/auth.php' ?>
 
-    <?php if (isLoggedIn()) : ?>
+    <?php if (Auth::isLoggedIn()) : ?>
         
         <p>You are currently logged in<a href="auth/logout.php">   Logout</a></p>
 

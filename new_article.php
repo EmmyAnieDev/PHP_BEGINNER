@@ -8,7 +8,7 @@
 
     require 'classes/database.php';
     require 'classes/article.php';
-    include 'auth/auth.php';
+    include 'classes/auth.php';
 
     session_start();
 
@@ -16,7 +16,7 @@
     $conn = $db->getConn();
 
     // If not logged in
-    if (!isLoggedIn()) {
+    if (!Auth::isLoggedIn()) {
         die("Unauthorized"); 
     }
 

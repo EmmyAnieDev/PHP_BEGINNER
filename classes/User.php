@@ -24,7 +24,7 @@ class User{
         if($user = $stmt->fetch()){
             
             // Verify that the provided password matches the hashed password in the database
-            return password_verify($password, $user->password);
+            return password_verify($password, $user->password); // ($user->password) is the password retuned from the fetch method
 
         }
 
