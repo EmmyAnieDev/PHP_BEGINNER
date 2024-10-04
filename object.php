@@ -50,8 +50,11 @@ echo '<br/>';
 
 echo $my_item2->country . '<br/>'; 
 echo $my_item2->getData() . '<br/>'; 
+//echo $my_item2->code . '<br/>'; // will throw an error as it can only be accessible only in super and sub classes
+echo $my_item2->getCode() . '<br/>';
 
 echo '<br/>'; 
 
 echo $book_obj1->country . '<br/>'; 
 echo $book_obj1->getData() . '<br/>'; 
+echo $book_obj1->getCode() . '<br/>';

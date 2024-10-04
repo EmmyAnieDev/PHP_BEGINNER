@@ -11,6 +11,7 @@ class Item {
     private $year;    // since it private it can only be used inside this class
     public static $count =0;  // Static properties and methods can be accessed without instantiating the class.
     public $country = 'USA' ;
+    protected $code = 1234;  // use protected so the property/method can be accessible by both parent and child/children classes
 
 
     // When an object is created, initialize the object's properties
@@ -48,5 +49,9 @@ class Item {
 
     public function getData(){
         return 'we have four data in each item';
+    }
+
+    public function getCode(){
+        return "code $this->code gotten from super class";
     }
 }

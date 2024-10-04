@@ -27,5 +27,10 @@ class Book extends Item{
     public function getData(){
         return 'we have five data in each Book';
     }
+
+    // here we are able to override and also access the protected property from the super class.
+    public function getCode(){
+        return "code $this->code gotten from sub class";
+    }
 }
 
