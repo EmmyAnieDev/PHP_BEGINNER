@@ -7,20 +7,14 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1); 
 
 require 'classes/database.php';
+require 'classes/article.php';
 
 session_start();  
-
 
 $db = new Database();  // create an object for the Database class
 $conn = $db->getConn(); // assign the getConn method to a variable called conn
 
-
-$sql = "SELECT * FROM article ORDER BY published_at";
-
-$result = $conn->query($sql);  // query the connection with the (sql)
-
-$articles = $result->fetchAll(PDO::FETCH_ASSOC); // FETCH RESULT AS ASSOCIATE ARRAY
-
+$articles = Article::getAllArticles($conn);
 
 
 ?>

@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1); 
 
 require 'classes/database.php';
-require 'includes/get_article.php'; 
+require 'classes/article.php'; 
 
 $db = new Database(); 
 $conn = $db->getConn(); 
@@ -15,7 +15,7 @@ $conn = $db->getConn();
 // Check if 'id' is present in the query string
 if (isset($_GET['id'])) {
 
-    $article = getArticle($conn, $_GET['id']);
+    $article = Article::getById($conn, $_GET['id']);
 
 } else {
 
