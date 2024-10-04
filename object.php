@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1); 
 
 require 'item.php';
+require 'book.php';
 
 // we don't need to instansiate the class since count is a staic property
 var_dump(Item::$count);
@@ -36,3 +37,11 @@ echo "this is the total count of object created: " . Item::$count;
 echo '<br/>';
 
 echo "the class maximum length is: " . Item::MAX_LENGTH;
+
+echo '<br/>';
+echo '<br/>';
+
+$book_obj1 = new Book('pen game', 'best for all', '2013', 'Damian');
+
+//calling the getYear method, which is inherited from the Item class. 
+echo "the was gotten using the getYear Method from it parent's class. Book year: " . $book_obj1->getYear() . '<br/>';   
