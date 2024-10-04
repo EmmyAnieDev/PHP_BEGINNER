@@ -7,6 +7,11 @@
  */
 class Article {
 
+    public $id;
+    public $title;
+    public $content;
+    public $published_at;
+
     /**
      * Retrieve all articles from the database.
      *
@@ -22,14 +27,14 @@ class Article {
     }
 
 
-    
+
     /**
      * Retrieve an article by its ID from the database.
      *
      * @param PDO $conn The PDO connection object.
      * @param int $id The ID of the article to retrieve.
      * @param string $columns The columns to select (default is all columns).
-     * @return array|null An associative array of the article if found, null otherwise.
+     * @return object|null A object of the article if found, null otherwise.
      */
     public static function getById($conn, $id, $columns = '*') {
         $sql = "SELECT $columns FROM article WHERE id = :id "; // SQL query to select specific columns from the article table where the ID matches
@@ -38,10 +43,13 @@ class Article {
     
         // Bind the $id parameter to the prepared statement
         $stmt->bindValue(':id', $id, PDO::PARAM_INT); // Bind the ID value to the placeholder in the SQL statement
+
+        // set default fetch mode to object
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Article'); 
         
         // Execute the prepared statement
         if ($stmt->execute()) {
-            return $stmt->fetch(PDO::FETCH_ASSOC); // Fetch and return the article as an associative array if the execution is successful
+            return $stmt->fetch(); 
         }
     
         return null; // Return null if the execution fails or the article is not found

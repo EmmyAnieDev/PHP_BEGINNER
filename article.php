@@ -36,13 +36,13 @@ if (isset($_GET['id'])) {
             <li>
                 <article>
 
-                    <h2><?= htmlspecialchars($article['title']); ?></h2>
-                    <p><?= htmlspecialchars($article['content']); ?></p>
+                    <h2><?= htmlspecialchars($article->title); ?></h2>
+                    <p><?= htmlspecialchars($article->content); ?></p>
 
                 </article>
                  
-                <a href="edit_article.php?id=<?= $article['id']; ?>">Edit</a>
-                <a href="delete_article.php?id=<?= $article['id']; ?>">Delete</a>
+                <a href="edit_article.php?id=<?= $article->id; ?>">Edit</a>
+                <a href="delete_article.php?id=<?= $article->id; ?>">Delete</a>
 
             </li>
         </ul>
