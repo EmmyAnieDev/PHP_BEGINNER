@@ -27,7 +27,7 @@ class Article {
         return $result->fetchAll(PDO::FETCH_ASSOC); // Fetch the result as an associative array
     }
 
-    
+
 
 
     /**
@@ -62,6 +62,7 @@ class Article {
     public function updateArticle($conn, $id, $title, $content, $published_at) {
 
         // Assign the form values to the object's properties
+        $this->id = $id;
         $this->title = $title;
         $this->content = $content;
         $this->published_at = $published_at;
@@ -75,15 +76,16 @@ class Article {
     
             if (!$stmt) {
                 // If the statement preparation fails, output an error message
+                $this->errors[] = "Query failed: " . implode(", ", $conn->errorInfo());
                 echo "Query failed: " . implode(", ", $conn->errorInfo());
                 return false; // Exit the function to prevent further execution
             } 
     
             // Bind the parameters to the prepared statement
-            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-            $stmt->bindValue(':title', $title, PDO::PARAM_STR);
-            $stmt->bindValue(':content', $content, PDO::PARAM_STR);
-            $stmt->bindValue(':published_at', $published_at, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+            $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
+            $stmt->bindValue(':content', $this->content, PDO::PARAM_STR);
+            $stmt->bindValue(':published_at', $this->published_at, PDO::PARAM_STR);
     
             // Execute the prepared statement
             if ($stmt->execute()) {
@@ -92,6 +94,7 @@ class Article {
                 exit();
             } else {
                 // Error in executing the update statement
+                $this->errors[] = "Error in inserting article: " . implode(", ", $conn->errorInfo());
                 echo "Error in executing update: " . implode(", ", $stmt->errorInfo());
                 return false; // Exit the function to prevent further execution
             }
@@ -124,12 +127,13 @@ class Article {
 
     // function to delete article
     public function deleteArticle($conn, $id){
-
+        
         $sql = "DELETE FROM article WHERE id = :id ";
         $stmt = $conn->prepare($sql);
     
         if (!$stmt) {
     
+            $this->errors[] = "Query failed: " . implode(", ", $conn->errorInfo());
             echo "Query failed: " . implode(", ", $conn->errorInfo());
             return false; // Exit the function to prevent further execution
     
@@ -145,9 +149,57 @@ class Article {
     
             } else {
                 // Error in executing the update statement
+                $this->errors[] = "Error in inserting article: " . implode(", ", $conn->errorInfo());
                 echo "Error in executing delete: " . implode(", ", $stmt->errorInfo());
             }
         }
+
+    }
+
+
+    // function to insert into the database
+    public function insertArticle($conn, $title, $content, $published_at){
+
+        // Assign the form values to the object's properties
+        $this->title = $title;
+        $this->content = $content;
+        $this->published_at = $published_at;
+
+        // Validate the article before updating
+        if ($this->validateArticle()) {
+
+           // Prepare the SQL statement
+           $sql = "INSERT INTO article (title, content, published_at) VALUES (:title, :content, :published_at)";
+           $stmt = $conn->prepare($sql);
+
+
+           if (!$stmt) {
+               // Query failed
+               $this->errors[] = "Query failed: " . implode(", ", $conn->errorInfo());
+               echo "Query failed: " . implode(", ", $conn->errorInfo());
+           } else {
+
+               // Bind the parameters to the prepared statement
+               $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
+               $stmt->bindValue(':content', $this->content, PDO::PARAM_STR);
+               $stmt->bindValue(':published_at', $this->published_at, PDO::PARAM_STR);
+
+               if ($stmt->execute()) {
+                   // Query successful, redirect to index.php
+                   header('Location: index.php');
+                   exit();
+               } else {
+                   // Error in executing the statement
+                   $this->errors[] = "Error in inserting article: " . implode(", ", $conn->errorInfo());
+                   echo "Error in inserting article: " . implode(", ", $conn->errorInfo());
+               }
+           }
+       }else{
+
+        // Validation failed
+        return false;
+
+       }
 
     }
 
