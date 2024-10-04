@@ -23,7 +23,8 @@ class User{
 
         if($user = $stmt->fetch()){
             
-            return $user->password == $password;
+            // Verify that the provided password matches the hashed password in the database
+            return password_verify($password, $user->password);
 
         }
 
