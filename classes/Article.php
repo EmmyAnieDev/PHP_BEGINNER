@@ -54,6 +54,37 @@ class Article {
     
         return null; // Return null if the execution fails or the article is not found
     }
+
+
+    public function updateArticle($conn, $id, $title, $content, $published_at) {
+        // Prepare the SQL statement to update the article
+        $sql = "UPDATE article SET title = :title, content = :content, published_at = :published_at WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+    
+        if (!$stmt) {
+            // If the statement preparation fails, output an error message
+            echo "Query failed: " . implode(", ", $conn->errorInfo());
+            return false; // Exit the function to prevent further execution
+        } 
+    
+        // Bind the parameters to the prepared statement
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':title', $title, PDO::PARAM_STR);
+        $stmt->bindValue(':content', $content, PDO::PARAM_STR);
+        $stmt->bindValue(':published_at', $published_at, PDO::PARAM_STR);
+    
+        // Execute the prepared statement
+        if ($stmt->execute()) {
+            // Update successful, redirect to the article page or display a success message
+            header("Location: article.php?id=" . $id);
+            exit();
+        } else {
+            // Error in executing the update statement
+            echo "Error in executing update: " . implode(", ", $stmt->errorInfo());
+            return false; // Exit the function to prevent further execution
+        }
+    }
+    
     
 
 }
