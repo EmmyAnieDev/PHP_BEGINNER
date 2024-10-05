@@ -10,27 +10,13 @@ require 'includes/init.php';
 
 $conn =  require 'includes/db.php';
 
-Auth::requireLogin();
-
 $articles = Article::getAllArticles($conn);
 
 
 ?>
 
 
-<?php require 'includes/header.php' ?>
-
-    <?php if (Auth::isLoggedIn()) : ?>
-        
-        <p>You are currently logged in<a href="auth/logout.php">   Logout</a></p>
-
-        <a href="new_article.php">New Article</a>
-
-    <?php else: ?>   
-        
-        <p>You are currently logged out<a href="auth/login.php">   Login</a></p>
-
-    <?php endif; ?>  
+<?php require 'includes/header.php' ?>  
 
     <?php if(empty($articles)) : ?>
     <p>No article found.</p>

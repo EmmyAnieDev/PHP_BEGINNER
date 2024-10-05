@@ -20,19 +20,9 @@ $articles = Article::getAllArticles($conn);
 
 <?php require '../includes/header.php' ?>
 
-    <?php if (Auth::isLoggedIn()) : ?>
-        
-        <p>You are currently logged in<a href="auth/logout.php">   Logout</a></p>
-
-        <a href="new_article.php">New Article</a>
-
-    <?php else: ?>   
-        
-        <p>You are currently logged out<a href="auth/login.php">   Login</a></p>
-
-    <?php endif; ?>  
-
     <h2>Administration</h2>
+
+    <p><a href="../new_article.php">New Article</a></p>
 
     <?php if(empty($articles)) : ?>
     <p>No article found.</p>
