@@ -23,7 +23,16 @@ class Paginator{
      * @return void
      */
     public function __construct($page, $records_per_page){
+
         $this->limit = $records_per_page;
+
+        $page = filter_var($page, FILTER_VALIDATE_INT, [
+            'options' => [
+                'default' => 1,   // default query to 1 if the user enters non-numeric value
+                'min_range' => 1  // default query to 1 if the user enters a negtive number
+            ]
+        ]);
+        
         $this->offset = $records_per_page * ($page - 1);
     }
 
