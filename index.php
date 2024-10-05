@@ -10,7 +10,7 @@ require 'includes/init.php';
 
 $conn =  require 'includes/db.php';
 
-$articles = Article::getPage($conn, 4, 4);
+$articles = Article::getPage($conn, 4, 0);
 
 ?>
 
