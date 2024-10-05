@@ -9,7 +9,6 @@
 
     $conn =  require 'includes/db.php';
 
-
     Auth::requireLogin();
 
     $title = $content = $published_at = '';

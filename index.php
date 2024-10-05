@@ -10,6 +10,8 @@ require 'includes/init.php';
 
 $conn =  require 'includes/db.php';
 
+Auth::requireLogin();
+
 $articles = Article::getAllArticles($conn);
 
 
