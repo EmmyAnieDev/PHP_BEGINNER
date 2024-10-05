@@ -9,9 +9,6 @@ require 'includes/init.php';
 
 $conn =  require 'includes/db.php';
 
-$db = new Database(); 
-$conn = $db->getConn();
-
 // Check if 'id' is present in the query string
 if (isset($_GET['id'])) {
 

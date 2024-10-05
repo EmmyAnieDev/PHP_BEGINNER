@@ -9,10 +9,6 @@ ini_set('display_errors', 1);
 require 'includes/init.php';
 
 $conn =  require 'includes/db.php';
- 
-
-$db = new Database();  // create an object for the Database class
-$conn = $db->getConn(); // assign the getConn method to a variable called conn
 
 $articles = Article::getAllArticles($conn);
 

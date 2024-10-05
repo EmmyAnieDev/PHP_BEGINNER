@@ -8,8 +8,7 @@ ini_set('display_errors', 1);
 
 require 'includes/init.php';
 
-$db = new Database(); 
-$conn = $db->getConn();
+$conn =  require 'includes/db.php';
 
 // Check if 'id' is present in the query string
 if (isset($_GET['id'])) {

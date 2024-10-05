@@ -10,10 +10,7 @@
     $conn =  require 'includes/db.php';
 
 
-    // If not logged in
-    if (!Auth::isLoggedIn()) {
-        die("Unauthorized"); 
-    }
+    Auth::requireLogin();
 
     $title = $content = $published_at = '';
 
