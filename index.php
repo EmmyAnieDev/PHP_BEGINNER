@@ -10,9 +10,13 @@ require 'includes/init.php';
 
 $conn =  require 'includes/db.php';
 
-$paginator = new Paginator(1, 4);
+// Create a new instance of the Paginator class for page 1 with 4 records per page
+// adding null coalescing operator to check if page is set(present) in the url else default as page 1
+$paginator = new Paginator($_GET['page'] ?? 1, 4);
 
+// Fetch a specific page of articles from the database
 $articles = Article::getPage($conn, $paginator->limit, $paginator->offset);
+
 
 ?>
 
