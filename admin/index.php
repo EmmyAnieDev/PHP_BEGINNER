@@ -22,7 +22,7 @@ $articles = Article::getAllArticles($conn);
 
     <h2>Administration</h2>
 
-    <p><a href="../new_article.php">New Article</a></p>
+    <p><a href="new_article.php">New Article</a></p>
 
     <?php if(empty($articles)) : ?>
     <p>No article found.</p>

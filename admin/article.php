@@ -7,9 +7,11 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1); 
 
 
-require 'includes/init.php';
+require '../includes/init.php';
 
-$conn =  require 'includes/db.php';
+$conn =  require '../includes/db.php';
+
+Auth::requireLogin();
 
 
 // Check if 'id' is present in the query string
@@ -27,7 +29,7 @@ if (isset($_GET['id'])) {
 ?>
 
 
-<?php require 'includes/header.php' ?>
+<?php require '../includes/header.php' ?>
 
     <?php if(!$article) : ?>
         <p>No article found.</p>
@@ -40,9 +42,12 @@ if (isset($_GET['id'])) {
                     <p><?= htmlspecialchars($article->content); ?></p>
 
                 </article>
+                 
+                <a href="edit_article.php?id=<?= $article->id; ?>">Edit</a>
+                <a href="delete_article.php?id=<?= $article->id; ?>">Delete</a>
 
             </li>
         </ul>
     <?php endif; ?>
 
-<?php require 'includes/footer.php' ?>
+<?php require '../includes/footer.php' ?>

@@ -5,9 +5,9 @@
     error_reporting(E_ALL); 
     ini_set('display_errors', 1); 
 
-    require 'includes/init.php';
+    require '../includes/init.php';
 
-    $conn =  require 'includes/db.php';
+    $conn =  require '../includes/db.php';
 
     Auth::requireLogin();
 
@@ -32,4 +32,4 @@
 
 <?php require 'includes/article_form.php'; ?>
 
-<?php require 'includes/footer.php'; ?>
+<?php require '../includes/footer.php'; ?>

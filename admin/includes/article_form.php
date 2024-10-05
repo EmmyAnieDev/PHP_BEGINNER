@@ -1,4 +1,4 @@
-<?php require 'header.php'; ?>
+<?php require '../includes/header.php'; ?>
 
 <!-- Display errors if any -->
 <?php if (!empty($article_obj->errors)) : ?>
