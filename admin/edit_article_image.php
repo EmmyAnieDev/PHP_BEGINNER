@@ -25,11 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     try{
 
-        if(empty($_FILES)){
-            throw new Exception('Invalid upload');
+        // If the total POST data exceeds the post_max_size limit, $_FILES will be empty, indicating an invalid upload
+        if (empty($_FILES)) {
+            throw new Exception('Invalid upload: File size exceeds the allowed limit.');
         }
 
         switch($_FILES['file']['error']) {
+
             case UPLOAD_ERR_OK:
                 break;
             case UPLOAD_ERR_NO_FILE:
@@ -41,6 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             default:
                 throw new Exception('An error occurred');
             
+        }
+
+        // if file is greater than 1 MB
+        if($_FILES['file']['size'] > 1000000){
+            throw new Exception('File is too large!');
         }
 
     }catch (Exception $e){
