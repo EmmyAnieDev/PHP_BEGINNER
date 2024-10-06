@@ -70,6 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Replace any characters that are not letters, numbers, underscores, or dashes with underscores
         $base = preg_replace('/[^a-zA-Z0-9_-]/', '_', $base);
 
+        // get just the first 200 chracters from the file name
+        $base = mb_substr($base, 0, 200);
+
         // Rebuild the file name with the sanitized base name and the original file extension
         $filename = $base . "." . $pathinfo['extension'];
 
@@ -91,12 +94,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $i++; // Increment the counter for the next iteration
         
         }
-        
 
         // Attempt to move the uploaded file from the temporary location to the destination
         if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
 
-            echo "File uploaded successfully.";
+            // If the image file is successfully set in the database for the article
+            if($article->setImageFile($conn, $filename)){
+
+                header("Location: article.php?id={$article->id}");
+
+            }
 
         }else{
 
