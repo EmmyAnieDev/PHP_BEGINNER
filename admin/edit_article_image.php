@@ -121,17 +121,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 <?php require '../includes/header.php'; ?>
 
-<h2>Edit Article Image</h2>
+    <h2>Edit Article Image</h2>
 
-<form enctype="multipart/form-data" method="post">
+    <?php if ($article->image_file) : ?>
+    <img src="../uploads/<?= htmlspecialchars($article->image_file); ?>" width="300" height="200">
+    <?php endif; ?>
 
-    <div>
-        <label for="file">Image file</label>
-        <input type="file" name="file" id="file">
-    </div>
 
-    <button>Upload</button>
 
-</form>
+    <form enctype="multipart/form-data" method="post">
+
+        <div>
+            <label for="file">Image file</label>
+            <input type="file" name="file" id="file">
+        </div>
+
+        <button>Upload</button>
+
+    </form>
 
 <?php require '../includes/footer.php'; ?>
