@@ -1,6 +1,6 @@
 <?php
 
-# THIS FILE IS RESPONSIBLE FOR EDITING OR UPDATING ARTICLE IN DATABASE USING IT'S ID
+# THIS FILE IS RESPONSIBLE FOR EDITING OR UPDATING ARTICLE IMAGE IN DATABASE USING IT'S ID
 
 error_reporting(E_ALL); 
 ini_set('display_errors', 1); 
@@ -25,12 +25,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     try{
 
+        if(empty($_FILES)){
+            throw new Exception('Invalid upload');
+        }
+
         switch($_FILES['file']['error']) {
             case UPLOAD_ERR_OK:
                 break;
             case UPLOAD_ERR_NO_FILE:
                 throw new Exception('No file selected');
                 break;
+                case UPLOAD_ERR_INI_SIZE:
+                    throw new Exception('File is too large (from the server settings)');
+                    break;
             default:
                 throw new Exception('An error occurred');
             
