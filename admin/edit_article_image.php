@@ -50,6 +50,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             throw new Exception('File is too large!');
         }
 
+        // Define the allowed MIME types for image files
+        $mime_types = ['image/gif', 'image/png', 'image/jpeg', 'image/webp'];
+
+        $info = finfo_open(FILEINFO_MIME_TYPE); // Open a fileinfo resource to get the MIME type of the uploaded file
+        $mime_type = finfo_file($info, $_FILES['file']['tmp_name']); // Get the actual MIME type of the uploaded file
+        
+        // Check if the MIME type of the file is not in the allowed list
+        if (!in_array($mime_type, $mime_types)){ 
+            throw new Exception('Invalid file type'); 
+        }
+        
+
     }catch (Exception $e){
         echo $e->getMessage();
     }
