@@ -61,8 +61,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             throw new Exception('Invalid file type'); 
         }
 
-        // Define the destination path, including the uploads directory and the uploaded file's name
-        $destination = "../uploads/" . $_FILES['file']['name'];
+        // Extract the components of the uploaded file's name (filename and extension)
+        $pathinfo = pathinfo($_FILES['file']['name']);
+
+        // Get the file's base name (filename without the extension)
+        $base = $pathinfo['filename'];
+
+        // Replace any characters that are not letters, numbers, underscores, or dashes with underscores
+        $base = preg_replace('/[^a-zA-Z0-9_-]/', '_', $base);
+
+        // Rebuild the file name with the sanitized base name and the original file extension
+        $filename = $base . "." . $pathinfo['extension'];
+
+        // Define the destination path where the file will be uploaded, inside the 'uploads' directory
+        $destination = "../uploads/$filename";
+
 
         // Attempt to move the uploaded file from the temporary location to the destination
         if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
