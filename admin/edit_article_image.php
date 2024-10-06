@@ -98,10 +98,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Attempt to move the uploaded file from the temporary location to the destination
         if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
 
+            // variable to hold current image file
+            $current_image = $article->image_file;
+
             // If the image file is successfully set in the database for the article
             if($article->setImageFile($conn, $filename)){
 
-                header("Location: article.php?id={$article->id}");
+                // If the current image file exists, delete it when a new image is being uploaded.
+                if ($current_image) {
+                    unlink("../uploads/$current_image");
+                }
+
+                header("Location: edit_article_image.php?id={$article->id}");
 
             }
 
