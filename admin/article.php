@@ -45,6 +45,7 @@ if (isset($_GET['id'])) {
                  
                 <a href="edit_article.php?id=<?= $article->id; ?>">Edit</a>
                 <a href="delete_article.php?id=<?= $article->id; ?>">Delete</a>
+                <a href="edit_article_image.php?id=<?= $article->id; ?>">Edit Image</a>
 
             </li>
         </ul>
