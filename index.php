@@ -13,7 +13,16 @@ $conn =  require 'includes/db.php';
 // Create a new instance of the Paginator class for page 1 with 4 records per page
 // adding null coalescing operator to check if page is set(present) in the url else default as page 1
 // add the total number of article from the database using the Article class static method getAllArticlesCount 
-$paginator = new Paginator($_GET['page'] ?? 1, 4, Article::getAllArticlesCount($conn));
+
+
+$page = $_GET['page'] ?? 1;
+$records_per_page = 4;
+
+// Get total number of articles from database connection
+$total_articles = Article::getAllArticlesCount($conn);
+
+// Create paginator instance
+$paginator = new Paginator($page, $records_per_page, $total_articles);
 
 // Fetch a specific page of articles from the database
 $articles = Article::getPage($conn, $paginator->limit, $paginator->offset);

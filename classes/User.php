@@ -21,6 +21,7 @@ class User{
 
         $stmt->execute();
 
+        /// If the user was successfully fetched, store the (authenticated) logged-in user in the $user variable
         if($user = $stmt->fetch()){
             
             // Verify that the provided password matches the hashed password in the database

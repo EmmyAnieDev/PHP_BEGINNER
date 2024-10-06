@@ -12,6 +12,21 @@ ini_set('display_errors', 1);
 class Auth{
 
 
+
+    /**
+     * Login using sessions
+     * 
+     * @return void
+     */
+    public static function login(){
+
+        session_regenerate_id(true); 
+
+        $_SESSION['is_logged_in'] = true;
+
+    }
+
+
     /**
      * Return the user authentication status
      * 
@@ -39,19 +54,6 @@ class Auth{
     }
 
     /**
-     * Login using sessions
-     * 
-     * @return void
-     */
-    public static function login(){
-
-        session_regenerate_id(true); 
-
-        $_SESSION['is_logged_in'] = true;
-
-    }
-
-    /**
      * Logout using sessions
      * 
      * @return void
@@ -63,11 +65,11 @@ class Auth{
 
         // If session cookies are used, delete the session cookie
         if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000,
-        $params["path"], $params["domain"],
-        $params["secure"], $params["httponly"]
-        );
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
         }
 
         // Destroy the session
