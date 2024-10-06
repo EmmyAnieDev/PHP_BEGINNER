@@ -21,8 +21,6 @@ if (isset($_GET['id'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-    var_dump($_FILES);
-
     try{
 
         // If the total POST data exceeds the post_max_size limit, $_FILES will be empty, indicating an invalid upload
@@ -120,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
 
     }catch (Exception $e){
-        echo $e->getMessage();
+        $error =  $e->getMessage();
     }
     
 }
@@ -133,9 +131,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <?php if ($article->image_file) : ?>
     <img src="../uploads/<?= htmlspecialchars($article->image_file); ?>" width="300" height="200">
+    <a href="delete_article_image.php?id=<?= $article->id; ?>">Delete</a>
     <?php endif; ?>
 
-
+    <?php if(isset($error)) : ?>
+        <p><?= $error ?></p>
+    <?php endif; ?>
 
     <form enctype="multipart/form-data" method="post">
 
