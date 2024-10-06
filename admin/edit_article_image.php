@@ -76,6 +76,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Define the destination path where the file will be uploaded, inside the 'uploads' directory
         $destination = "../uploads/$filename";
 
+        #   if file already exist with the name.
+        $i = 1; // Initialize a counter variable to append to the filename if needed
+
+        // Check if a file with the current destination path already exists
+        while (file_exists($destination)) { 
+        
+            // Create a new filename by appending '-1', '-2', etc., to the base name
+            $filename = $base . "-$i." . $pathinfo['extension'];
+        
+            // Update the destination path with the new filename
+            $destination = "../uploads/$filename";
+        
+            $i++; // Increment the counter for the next iteration
+        
+        }
+        
 
         // Attempt to move the uploaded file from the temporary location to the destination
         if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
