@@ -61,18 +61,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             throw new Exception('Invalid file type'); 
         }
 
+        // Define the destination path, including the uploads directory and the uploaded file's name
         $destination = "../uploads/" . $_FILES['file']['name'];
 
+        // Attempt to move the uploaded file from the temporary location to the destination
         if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
 
-            echo "File uploaded succesfully.";
+            echo "File uploaded successfully.";
 
         }else{
 
             throw new Exception("Unable to move uploaded file.");
 
         }
-        
 
     }catch (Exception $e){
         echo $e->getMessage();
