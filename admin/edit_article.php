@@ -30,7 +30,13 @@ if (isset($_GET['id'])) {
     die("ID not supplied, article not given");
 }
 
-var_dump($article->getCategories($conn));
+// Extracts an array of category IDs associated with the article
+$category_ids = array_column($article->getArticleCategories($conn), 'id');
+
+// Retrieves all categories from the database using the Category class method
+$categories = Category::getAllCategories($conn);
+
+
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
