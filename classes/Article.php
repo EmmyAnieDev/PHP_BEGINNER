@@ -102,6 +102,30 @@ class Article {
     }
 
 
+    /**
+     * Get the article record based on the ID along ith associated ategories, if any
+     * 
+     * @param object $conn Connection to the database
+     * @param interger $id The article id
+     * 
+     * @return array the arrticle data with categories.
+     */
+    public static function getArticleWithCategoryById($conn, $id){
+
+        $sql = "SELECT *, category.name AS category_name FROM article LEFT JOIN article_category ON article.id = article_category.article_id
+         LEFT JOIN category ON article_category.category_id = category.id WHERE article.id = :id";
+
+        $stmt = $conn->prepare($sql);
+            
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+
 
     public function updateArticle($conn, $id, $title, $content, $published_at) {
 

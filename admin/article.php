@@ -17,7 +17,10 @@ Auth::requireLogin();
 // Check if 'id' is present in the query string
 if (isset($_GET['id'])) {
 
-    $article = Article::getById($conn, $_GET['id']);
+    // $article = Article::getById($conn, $_GET['id']);
+    $article = Article::getArticleWithCategoryById($conn, $_GET['id']);
+
+    print_r($article);
 
 } else {
 
@@ -38,19 +41,31 @@ if (isset($_GET['id'])) {
             <li>
                 <article>
 
-                    <h2><?= htmlspecialchars($article->title); ?></h2>
+                    <?php if($article[0]['category_name']) : ?>
 
-                    <?php if ($article->image_file) : ?>
-                    <img src="../uploads/<?= htmlspecialchars($article->image_file); ?>" width="300" height="200">
+                        <p>Categories:
+
+                            <?php foreach($article as $article_category): ?>
+                                <?= htmlspecialchars($article[0]['category_name'] ?? ''); ?>
+                            <?php endforeach; ?>
+
+                        </p>
+                    
                     <?php endif; ?>
 
-                    <p><?= htmlspecialchars($article->content); ?></p>
+                    <h2><?= htmlspecialchars($article[0]['title']); ?></h2>
+
+                    <?php if ($article[0]['image_file']) : ?>
+                    <img src="../uploads/<?= htmlspecialchars($article[0]['image_file']); ?>" width="300" height="200">
+                    <?php endif; ?>
+
+                    <p><?= htmlspecialchars($article[0]['content']); ?></p>
 
                 </article>
                  
-                <a href="edit_article.php?id=<?= $article->id; ?>">Edit</a>
-                <a href="delete_article.php?id=<?= $article->id; ?>">Delete</a>
-                <a href="edit_article_image.php?id=<?= $article->id; ?>">Edit Image</a>
+                <a href="edit_article.php?id=<?= $article[0]['id']; ?>">Edit</a>
+                <a href="delete_article.php?id=<?= $article[0]['id']; ?>">Delete</a>
+                <a href="edit_article_image.php?id=<?= $article[0]['id']; ?>">Edit Image</a>
 
             </li>
         </ul>
