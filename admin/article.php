@@ -46,7 +46,7 @@ if (isset($_GET['id'])) {
                         <p>Categories:
 
                             <?php foreach($article as $article_category): ?>
-                                <?= htmlspecialchars($article[0]['category_name'] ?? ''); ?>
+                                <?= htmlspecialchars($article_category['category_name'] ?? ''); ?>
                             <?php endforeach; ?>
 
                         </p>

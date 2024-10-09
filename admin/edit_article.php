@@ -30,6 +30,8 @@ if (isset($_GET['id'])) {
     die("ID not supplied, article not given");
 }
 
+var_dump($article->getCategories($conn));
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     // Get input from form submission

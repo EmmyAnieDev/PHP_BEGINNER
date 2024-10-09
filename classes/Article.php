@@ -126,6 +126,31 @@ class Article {
     }
 
 
+    /**
+     * Get the article's categories
+     * 
+     * @param object $conn The Connection to database
+     * 
+     * @return array The Category data
+     */
+    public function getCategories($conn){
+
+        $sql = "SELECT category.* FROM category JOIN article_category ON category_id = article_category.category_id WHERE article_id = :id";
+
+        $stmt = $conn->prepare($sql);
+            
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+
+
+
+
 
     public function updateArticle($conn, $id, $title, $content, $published_at) {
 
