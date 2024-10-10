@@ -46,7 +46,9 @@ class Article {
      */
     public static function getPage($conn, $limit, $offset){
 
-        $sql = "SELECT * FROM article ORDER BY published_at LIMIT :limit OFFSET :offset";
+        $sql = "SELECT a.*, category.name AS category_name FROM (SELECT * FROM article ORDER BY published_at LIMIT :limit OFFSET :offset)
+         AS a LEFT JOIN article_category ON a.id = article_category.article_id
+         LEFT JOIN category ON article_category.category_id = category.id";
 
         $stmt = $conn->prepare($sql);
 
@@ -55,7 +57,30 @@ class Article {
 
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $articles = [];
+
+        $previous_id = null;
+
+        foreach($results as $result){
+
+            $article_id = $result['id'];
+
+            if($article_id != $previous_id){
+                $result['category_names'] = [];
+
+                $articles[$article_id] = $result;
+
+            }
+
+            $articles[$article_id]['category_names'][] = $result['category_name'];
+
+            $previous_id = $article_id;  // at the end let the previous id be the current id
+
+        }
+
+        return $articles;
 
 
     }

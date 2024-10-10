@@ -51,6 +51,17 @@ $articles = Article::getPage($conn, $paginator->limit, $paginator->offset);
                 <tr>
                     <td>
                         <a href="article.php?id=<?= $article['id']; ?>"><?= $article['title']; ?></a>
+
+                        <!-- display article category name -->
+                        <?php if ($article['category_names']) : ?>
+                        <p>Categories:
+                            <?php foreach($article['category_names'] as $name) :?>
+                                <?= htmlspecialchars($name ?? ''); ?>
+                            <?php endforeach ;?>
+                        </p>
+                        <?php endif ;?>
+
+                        <p><?= $article['content']; ?></p>
                     </td>
                 </tr>
             <?php endforeach; ?></tbody>
