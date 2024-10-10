@@ -62,7 +62,7 @@ if (isset($_GET['id'])) {
                 </article>
 
                 <a href="edit_article.php?id=<?= $article[0]['article_id']; ?>">Edit</a>
-                <a href="delete_article.php?id=<?= $article[0]['article_id']; ?>">Delete</a>
+                <a class="delete_article" href="delete_article.php?id=<?= $article[0]['article_id']; ?>">Delete</a>
                 <a href="edit_article_image.php?id=<?= $article[0]['article_id']; ?>">Edit Image</a>
 
 

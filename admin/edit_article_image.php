@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <?php if ($article->image_file) : ?>
     <img src="../uploads/<?= htmlspecialchars($article->image_file); ?>" width="300" height="200">
-    <a href="delete_article_image.php?id=<?= $article->id; ?>">Delete</a>
+    <a class="delete" href="delete_article_image.php?id=<?= $article->id; ?>">Delete</a>
     <?php endif; ?>
 
     <?php if(isset($error)) : ?>
