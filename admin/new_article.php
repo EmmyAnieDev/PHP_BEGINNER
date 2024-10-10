@@ -10,22 +10,38 @@
     $conn =  require '../includes/db.php';
 
     Auth::requireLogin();
+    
+    $article_obj = new Article();
 
     $title = $content = $published_at = '';
+
+    // Extracts an array of category IDs associated with the article
+    $category_ids = [];
+    
+    // Retrieves all categories from the database using the Category class method
+    $categories = Category::getAllCategories($conn);
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         // Get user input
-        $title = $_POST['title'];
-        $content = $_POST['content'];
-        $published_at = $_POST['published_at'];
-
-
-        $article_obj = new Article();
-        $article_obj->InsertArticle($conn, $title, $content, $published_at);
-
-         
+        $article_obj->title = $_POST['title'];
+        $article_obj->content = $_POST['content'];
+        $article_obj->published_at = $_POST['published_at'];
+        
+        $category_ids = $_POST['category'] ?? [];
+        
+        // Insert the article and get the inserted article ID
+        $article_id = $article_obj->insertArticle($conn, $article_obj->title, $article_obj->content, $article_obj->published_at);
+        
+        if ($article_id) {
+            
+            $article_obj->id = $article_id; // Set the ID for the article object
+            $article_obj->setArticleCategories($conn, $category_ids);
+            header("Location: article.php?id=$article_obj->id");
+            
+        }
     }
+    
 ?>
 
 <h2>New Article</h2>

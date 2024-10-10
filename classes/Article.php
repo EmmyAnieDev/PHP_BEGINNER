@@ -169,6 +169,10 @@ class Article {
             $this->errors[] = 'Content is required.';
         }
     
+        if ($this->published_at == '') {
+            $this->errors[] = 'published_at is required.';
+        }
+    
         return empty($this->errors);
     }
     
@@ -315,9 +319,8 @@ class Article {
                $stmt->bindValue(':published_at', $this->published_at, PDO::PARAM_STR);
 
                if ($stmt->execute()) {
-                   // Query successful, redirect to index.php
-                   header('Location: index.php');
-                   exit();
+                return $conn->lastInsertId();  // return last inserted id to be used while setting category
+
                } else {
                    // Error in executing the statement
                    $this->errors[] = "Error in inserting article: " . implode(", ", $conn->errorInfo());
