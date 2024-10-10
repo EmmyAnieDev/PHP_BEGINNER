@@ -39,18 +39,27 @@ $categories = Category::getAllCategories($conn);
 
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
     // Get input from form submission
     $id = $_GET['id'];
     $title = $_POST['title'];
     $content = $_POST['content'];
     $published_at = $_POST['published_at'];
+    
+    $category_ids = $_POST['category'] ?? [];
+    // print_r($category_ids);
+    // exit;
 
     $article_obj = new Article();
-    $article_obj->updateArticle($conn, $id, $title, $content, $published_at);
 
-    
+    if ($article_obj->updateArticle($conn, $id, $title, $content, $published_at)) {
+        
+        // Set categories after a successful article update
+        $article_obj->setArticleCategories($conn, $category_ids);
+
+        header("Location: article.php?id=" . $id);
+    }
 }
+
 
 ?>
 

@@ -1,5 +1,10 @@
 <?php
 
+
+error_reporting(E_ALL); 
+ini_set('display_errors', 1); 
+
+
 /**
  * Class Article
  * 
@@ -112,9 +117,12 @@ class Article {
      */
     public static function getArticleWithCategoryById($conn, $id){
 
-        $sql = "SELECT *, category.name AS category_name FROM article LEFT JOIN article_category ON article.id = article_category.article_id
-         LEFT JOIN category ON article_category.category_id = category.id WHERE article.id = :id";
-
+        $sql = "SELECT article.id AS article_id, article.title, article.content, article.image_file, category.name AS category_name 
+        FROM article 
+        LEFT JOIN article_category ON article.id = article_category.article_id
+        LEFT JOIN category ON article_category.category_id = category.id 
+        WHERE article.id = :id";
+        
         $stmt = $conn->prepare($sql);
             
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -151,10 +159,6 @@ class Article {
     
 
 
-
-
-
-
     public function updateArticle($conn, $id, $title, $content, $published_at) {
 
         // Assign the form values to the object's properties
@@ -185,9 +189,7 @@ class Article {
     
             // Execute the prepared statement
             if ($stmt->execute()) {
-                // Update successful, redirect to the article page or display a success message
-                header("Location: article.php?id=" . $id);
-                exit();
+                return true;
             } else {
                 // Error in executing the update statement
                 $this->errors[] = "Error in inserting article: " . implode(", ", $conn->errorInfo());
@@ -200,23 +202,33 @@ class Article {
         }
     }
     
-    
 
 
-    // function to Validate input
-    protected function validateArticle() {
-        if ($this->title == '') {
-            $this->errors[] = 'Title is required';
+    public function setArticleCategories($conn, $category_ids) {
+
+        // Insert new category associations
+        if ($category_ids) {
+            $sql = "INSERT IGNORE INTO article_category (article_id, category_id) VALUES ";
+
+            $values = [];
+
+            foreach ($category_ids as $category_id) {
+                $values[] = "({$this->id}, ?)";
+            }
+
+            $sql .= implode(", ", $values);
+
+            $stmt = $conn->prepare($sql);
+
+            foreach($category_ids as $index => $category_id){
+                $stmt->bindvalue($index + 1, $category_id, PDO::PARAM_INT);
+            }
+
+            $stmt->execute();
+
+        }else{
+            echo "something wrong with this function!";
         }
-        if ($this->content == '') {
-            $this->errors[] = 'Content is required';
-        }
-        if ($this->published_at == '') {
-            $this->errors[] = 'Publication date is required';
-        }
-    
-        // Return true if no errors were found, false otherwise
-        return empty($this->errors);
     }
     
     

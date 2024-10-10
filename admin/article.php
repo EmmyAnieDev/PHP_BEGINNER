@@ -20,8 +20,6 @@ if (isset($_GET['id'])) {
     // $article = Article::getById($conn, $_GET['id']);
     $article = Article::getArticleWithCategoryById($conn, $_GET['id']);
 
-    print_r($article);
-
 } else {
 
     $article = null;
@@ -62,10 +60,11 @@ if (isset($_GET['id'])) {
                     <p><?= htmlspecialchars($article[0]['content']); ?></p>
 
                 </article>
-                 
-                <a href="edit_article.php?id=<?= $article[0]['id']; ?>">Edit</a>
-                <a href="delete_article.php?id=<?= $article[0]['id']; ?>">Delete</a>
-                <a href="edit_article_image.php?id=<?= $article[0]['id']; ?>">Edit Image</a>
+
+                <a href="edit_article.php?id=<?= $article[0]['article_id']; ?>">Edit</a>
+                <a href="delete_article.php?id=<?= $article[0]['article_id']; ?>">Delete</a>
+                <a href="edit_article_image.php?id=<?= $article[0]['article_id']; ?>">Edit Image</a>
+
 
             </li>
         </ul>
