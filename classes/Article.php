@@ -156,6 +156,21 @@ class Article {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    public function validateArticle() {
+        $this->errors = [];
+    
+        if ($this->title == '') {
+            $this->errors[] = 'Title is required.';
+        }
+    
+        if ($this->content == '') {
+            $this->errors[] = 'Content is required.';
+        }
+    
+        return empty($this->errors);
+    }
     
 
 
@@ -205,6 +220,13 @@ class Article {
 
 
     public function setArticleCategories($conn, $category_ids) {
+
+        // First, delete all existing category associations for this article
+        $sql_delete = "DELETE FROM article_category WHERE article_id = :article_id";
+        $stmt_delete = $conn->prepare($sql_delete);
+        $stmt_delete->bindValue(':article_id', $this->id, PDO::PARAM_INT);
+        $stmt_delete->execute();
+
 
         // Insert new category associations
         if ($category_ids) {
