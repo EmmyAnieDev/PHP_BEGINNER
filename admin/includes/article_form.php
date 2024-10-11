@@ -11,7 +11,7 @@
 
 
 <!-- Article Form -->
-<form action="" method="post">
+<form id="formArticle" method="post">
     <div>
         <label for="title">Title</label>
         <input name="title" id="title" placeholder="Article title" value="<?= htmlspecialchars($title); ?>">
