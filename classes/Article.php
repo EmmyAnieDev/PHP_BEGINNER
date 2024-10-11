@@ -44,9 +44,11 @@ class Article {
      * 
      * @return array An associative array of the page of article records  
      */
-    public static function getPage($conn, $limit, $offset){
+    public static function getPage($conn, $limit, $offset, $only_published = false){
 
-        $sql = "SELECT a.*, category.name AS category_name FROM (SELECT * FROM article ORDER BY published_at LIMIT :limit OFFSET :offset)
+        $condition = $only_published ? ' WHERE published_at IS NOT NULL' : '';
+
+        $sql = "SELECT a.*, category.name AS category_name FROM (SELECT * FROM article $condition ORDER BY published_at LIMIT :limit OFFSET :offset)
          AS a LEFT JOIN article_category ON a.id = article_category.article_id
          LEFT JOIN category ON article_category.category_id = category.id";
 
@@ -94,9 +96,11 @@ class Article {
      * 
      * @return interger The total number of records
      */
-    public static function getAllArticlesCount($conn){
+    public static function getAllArticlesCount($conn, $only_published = false){
 
-        $articlesCount = $conn->query("SELECT COUNT(*) FROM article")->fetchColumn();
+        $condition = $only_published ? ' WHERE published_at IS NOT NULL' : '';
+
+        $articlesCount = $conn->query("SELECT COUNT(*) FROM article$condition")->fetchColumn();
 
         return $articlesCount;
 
@@ -140,13 +144,17 @@ class Article {
      * 
      * @return array the arrticle data with categories.
      */
-    public static function getArticleWithCategoryById($conn, $id){
+    public static function getArticleWithCategoryById($conn, $id, $only_published = false){
 
         $sql = "SELECT article.id AS article_id, article.title, article.content, article.image_file, category.name AS category_name 
         FROM article 
         LEFT JOIN article_category ON article.id = article_category.article_id
         LEFT JOIN category ON article_category.category_id = category.id 
         WHERE article.id = :id";
+
+        if($only_published){
+            $sql .= ' AND article.published_at IS NOT NULL';
+        }
         
         $stmt = $conn->prepare($sql);
             

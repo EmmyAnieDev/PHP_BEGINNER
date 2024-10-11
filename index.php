@@ -19,13 +19,13 @@ $page = $_GET['page'] ?? 1;
 $records_per_page = 4;
 
 // Get total number of articles from database connection
-$total_articles = Article::getAllArticlesCount($conn);
+$total_articles = Article::getAllArticlesCount($conn, true);
 
 // Create paginator instance
 $paginator = new Paginator($page, $records_per_page, $total_articles);
 
 // Fetch a specific page of articles from the database
-$articles = Article::getPage($conn, $paginator->limit, $paginator->offset);
+$articles = Article::getPage($conn, $paginator->limit, $paginator->offset, true);
 
 
 ?>

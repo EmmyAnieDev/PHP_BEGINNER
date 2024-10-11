@@ -18,7 +18,7 @@ Auth::requireLogin();
 if (isset($_GET['id'])) {
 
     // $article = Article::getById($conn, $_GET['id']);
-    $article = Article::getArticleWithCategoryById($conn, $_GET['id']);
+    $article = Article::getArticleWithCategoryById($conn, $_GET['id'], true);
 
 } else {
 
