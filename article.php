@@ -38,6 +38,13 @@ if (isset($_GET['id'])) {
 
                     <h2><?= htmlspecialchars($article->title); ?></h2>
 
+                    <time datetime="<?= $article->published_at?>">
+                        <?php 
+                            $datetime = new DateTime($article->published_at);
+                            echo $datetime->format("j, F Y");
+                        ?> 
+                    </time>
+
                     <?php if ($article->image_file) : ?>
                     <img src="uploads/<?= htmlspecialchars($article->image_file); ?>" width="300" height="200">
                     <?php endif; ?>
