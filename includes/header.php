@@ -30,6 +30,8 @@
                     <li class="nav-item"><a class="nav-link" href="/php_udemy/auth/login.php">   Login</a></li>
 
                     <?php endif; ?>  
+
+                    <li class="nav-item"><a class="nav-link" href="/php_udemy/contact.php">   Contact</a></li>
                 </ul>
             </nav>
     </body>
