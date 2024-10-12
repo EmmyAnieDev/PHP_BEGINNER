@@ -32,3 +32,18 @@ $("#formArticle").validate({
     },
   },
 });
+
+$("#formContact").validate({
+  rules: {
+    email: {
+      required: true,
+      email: true,
+    },
+    subject: {
+      required: true,
+    },
+    message: {
+      required: true,
+    },
+  },
+});
