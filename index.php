@@ -66,19 +66,19 @@ $articles = Article::getPage($conn, $paginator->limit, $paginator->offset, true)
         </ul>
 
         <nav>
-            <ul>
-                <li>
+            <ul class="pagination">
+                <li class="page-item">
                     <?php if($paginator->previousPage): ?>
-                        <a href="?page=<?= $paginator->previousPage; ?>">Previous</a>
+                        <a class="page-link" href="?page=<?= $paginator->previousPage; ?>">Previous</a>
                     <?php else: ?>
-                        Previous
+                        <span class="page-link">Previous</span>
                     <?php endif; ?>
                 </li>
-                <li>
+                <li class="page-item">
                     <?php if($paginator->nextPage): ?>
-                        <a href="?page=<?= $paginator->nextPage; ?>">Next</a>
+                        <a class="page-link" href="?page=<?= $paginator->nextPage; ?>">Next</a>
                     <?php else: ?>
-                        Next
+                        <span class="page-link">Next</span>
                     <?php endif; ?>
                 </li>
             </ul>
