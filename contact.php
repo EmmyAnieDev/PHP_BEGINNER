@@ -14,7 +14,7 @@ require 'includes/init.php';
 
 $email = $subject = $message = '';
 $sent = false;
-$errors = []; // Ensure errors array is initialized
+$errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Default values as empty
