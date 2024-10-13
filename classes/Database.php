@@ -6,6 +6,20 @@
  */
 class Database {
 
+    protected $db_host;
+    protected $db_name;
+    protected $db_user;
+    protected $db_pass;
+
+    public function __construct($db_host, $db_name, $db_user, $db_pass){
+
+        $this->db_host = $db_host;
+        $this->db_name = $db_name;
+        $this->db_user = $db_user;
+        $this->db_pass = $db_pass;
+
+    }
+
     /**
      * Establishes and returns a PDO connection to the MySQL database.
      *
@@ -13,18 +27,12 @@ class Database {
      */
     public function getConn() {
 
-        // Database credentials
-        $db_host = 'localhost';
-        $db_name = 'cms';
-        $db_user = 'emmy';
-        $db_password = 'test1234';
-
         try {
             // Data Source Name (DSN) for the PDO connection
-            $dsn = "mysql:host=" . $db_host . ";dbname=" . $db_name;
+            $dsn = "mysql:host=" . $this->db_host . ";dbname=" . $this->db_name;
 
             // Create a new PDO instance and establish the connection
-            $conn = new PDO($dsn, $db_user, $db_password);
+            $conn = new PDO($dsn, $this->db_user, $this->db_pass);
 
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Set the PDO error mode to exception
 

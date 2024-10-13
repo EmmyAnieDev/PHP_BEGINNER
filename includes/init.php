@@ -11,3 +11,5 @@ spl_autoload_register(function($class){
 // Start a new session or resume the existing session.
 // This is necessary for storing user data (like login state) across different pages.
 session_start(); 
+
+require __DIR__ . '/../config.php';
